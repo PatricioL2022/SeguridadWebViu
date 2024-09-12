@@ -7,14 +7,14 @@
         <!-- Name -->
         <div>
             <x-input-label for="nombre" :value="__('Nombre')" class="required"/>
-            <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" autofocus autocomplete="nombre" maxlength="20" />
+            <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus autocomplete="nombre" maxlength="20" />
             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
         </div>
 
         <!-- Apellidos -->
         <div class="mt-4">
             <x-input-label for="apellidos" :value="__('Apellidos')" class="required"/>
-            <x-text-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" :value="old('apellidos')" autocomplete="apellidos" maxlength="40" />
+            <x-text-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" :value="old('apellidos')" required autocomplete="apellidos" maxlength="40" />
             <x-input-error :messages="$errors->get('apellidos')" class="mt-2" />
         </div>
 
@@ -39,6 +39,7 @@
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
+                            :value="old('password')"
                             required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -51,7 +52,9 @@
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
                             id="password_confirmation"
-                            name="password_confirmation" required autocomplete="new-password" />
+                            name="password_confirmation" 
+                            :value="old('password_confirmation')"
+                            required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
@@ -66,10 +69,10 @@
         <!-- Pais -->
         <div class="mt-4">
         <x-input-label for="pais" :value="__('Pais')" />
-        <select name="pais" id="pais" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+        <select name="pais[]" id="pais" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
             <option value="" selected="selected" >---Seleccione su país---</option>
-            @foreach ($select1_option as $tag)
-                <option value="{{ $tag['name'] }}" >{{ $tag['name'] }}</option>
+            @foreach ($countries as $country)
+                <option value="{{ $country['name'] }}" {{ in_array($country['name'], old('pais', [])) ? 'selected' : '' }}>{{ $country['name'] }}</option>
             @endforeach
         </select>
         <x-input-error :messages="$errors->get('pais')" class="mt-2" />

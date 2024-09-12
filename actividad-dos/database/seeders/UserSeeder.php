@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 class UserSeeder extends Seeder
 {
     /**
@@ -13,17 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        /**User::factory()->create([
-            'nombre' => 'Test User',
-            'email' => 'seguridadweb@campusviu.es',
-            'password' => 'S3gur1d4d?W3b'
-        ]);*/
         DB::table('users')->insert([
             'nombre' => 'Test User',
             'apellidos'=> 'LastName',
             'dni' => '12345678L',
             'email' => 'seguridadweb@campusviu.es',
-            'password' => 'S3gur1d4d?W3b'
+            'password' => Hash::make('S3gur1d4d?W3b')
         ]);
     }
 }

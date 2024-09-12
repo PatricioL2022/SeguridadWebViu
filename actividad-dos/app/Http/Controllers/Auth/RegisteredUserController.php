@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
     {
         $countries = Country::all() ;
         return view('auth.register',[
-            'select1_option' => $countries,
+            'countries' => $countries,
         ]);
     }
 
@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-       
+       //dd($request->pais);
         $request->validate([
             'nombre' => ['required', 'string','min:2' ,'max:20','regex:/(^([a-zA-Z_ ]+)(\d+)?$)/u'],
             'apellidos' => ['required', 'string','min:2' ,'max:40','regex:/(^([a-zA-Z_ ]+)(\d+)?$)/u'],
@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'telefono' => $request->telefono,
-            'pais' => $request->pais,
+            'pais' => $request->pais[0],
             'sobreti' => $request->sobreti,
         ]);
 
