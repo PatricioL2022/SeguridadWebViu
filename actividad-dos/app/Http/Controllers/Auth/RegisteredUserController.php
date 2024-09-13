@@ -32,7 +32,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-       //dd($request->pais);
         $request->validate([
             'nombre' => ['required', 'string','min:2' ,'max:20','regex:/(^([a-zA-Z_ ]+)(\d+)?$)/u'],
             'apellidos' => ['required', 'string','min:2' ,'max:40','regex:/(^([a-zA-Z_ ]+)(\d+)?$)/u'],
@@ -56,9 +55,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
-
         return redirect(route('dashboard', absolute: false));
     }
 }
