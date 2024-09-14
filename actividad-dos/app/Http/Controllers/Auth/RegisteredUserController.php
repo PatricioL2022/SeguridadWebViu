@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Country;
@@ -38,7 +39,7 @@ class RegisteredUserController extends Controller
             'dni' => ['required', 'string','min:9','max:9','regex:/\d{8}?[a-zA-Z]/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class,
             'regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', 'max:50', Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised(),],
             'telefono' => !empty($request->telefono) ? ['string','min:9','max:12','regex:/^(\+\d{9,12})$/'] : [],
             'sobreti' => !empty($request->sobreti) ? ['string','min:20','max:250'] : [],
         ]);
